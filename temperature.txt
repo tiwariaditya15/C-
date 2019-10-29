@@ -1,0 +1,2 @@
+The temperature in degree celcius is 68.
+Temperature in fahrenheit is 154.4.

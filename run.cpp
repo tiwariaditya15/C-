@@ -1,62 +1,40 @@
 #include <iostream>
 using namespace std;
-class Example;
-Example operator +(Example&, Example&);
-Example operator -(Example&, Example&);
-class Example{
-int inches, feet;
-public:
-Example(){}
-Example(int feetC, int inchesC){
-feet = feetC;
-inches = inchesC;
-}
-int getInches();
-int getFeet();
-friend Example operator +(Example&, Example&);
-friend Example operator -(Example&, Example&);
+ 
+class Distance {
+   private:
+      int feet;             // 0 to infinite
+      int inches;           // 0 to 12
+      
+   public:
+      // required constructors
+      Distance() {
+         feet = 0;
+         inches = 0;
+      }
+      Distance(int f, int i) {
+         feet = f;
+         inches = i;
+      }
+      friend ostream &operator<<( ostream &output, const Distance &D ) { 
+         output << "F : " << D.feet << " I : " << D.inches;
+         return output;            
+      }
+
+      friend istream &operator>>( istream  &input, Distance &D ) { 
+         input >> D.feet >> D.inches;
+         return input;            
+      }
 };
-int Example::getInches(){
-return inches;
-}
-int Example::getFeet(){
-return feet;
-}
-Example operator +(Example &var1, Example &var2){
-Example temp;
-temp.feet = var1.feet + var2.feet;
-temp.inches = var1.inches + var2.inches;
-if( temp.inches >= 12){
-temp.feet++;
-temp.inches -= 12;
-}
-return temp;
-}
-Example operator -(Example &var1, Example &var2){
-Example temp;
-if( var1.feet < var2.feet){
-temp.feet = var2.feet - var1.feet;
-}else{
-temp.feet = var1.feet - var2.feet;
-}
-if (var1.inches < var2.inches) {
-temp.inches = var2.inches - var1.inches;
-}else{
-temp.inches = var1.inches - var2.inches;
-}
-if( temp.inches >= 12){
-temp.feet++;
-temp.inches -= 12;
-}
-return temp;
-}
-int main()
-{
-Example obj1(15, 12), obj2(10, 2), obj3;
-cout<<"\nobj1(feets inches):"<<obj1.getFeet()<<" "<<obj1.getInches()<<" & "<<"obj2(feets inches):"<<obj2.getFeet()<<" "<<obj2.getInches()<<endl;
-obj3 = obj1 + obj2;
-cout<<"\nobj3 after (obj1+obj2)[in feet inches]:"<<obj3.getFeet()<<" "<<obj3.getInches()<<endl;
-obj3 = obj1 - obj2;
-cout<<"\nobj3 after (obj1-obj2)[in feet inches]:"<<obj3.getFeet()<<" "<<obj3.getInches()<<endl;
-return 0;
+
+int main() {
+   Distance D1(11, 10), D2(5, 11), D3;
+
+   cout << "Enter the value of object : " << endl;
+   cin >> D3;
+   cout << "First Distance : " << D1 << endl;
+   cout << "Second Distance :" << D2 << endl;
+   cout << "Third Distance :" << D3 << endl;
+
+   return 0;
 }
